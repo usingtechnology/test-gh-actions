@@ -20,7 +20,7 @@ jobs:
       skip: ${{ steps.skipcheck.outputs.test }}  
     steps:
       - run: |
-          echo "${{ fromJSON(needs.preflight.outputs.skip) }}"
+          echo "${{ needs.preflight.outputs.skip }}"
 
 
   dep1:
