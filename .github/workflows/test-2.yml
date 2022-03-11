@@ -20,7 +20,7 @@ jobs:
       skip: ${{ steps.skipcheck.outputs.test }}  
     steps:
       - run: |
-          echo ${{ fromJSON(needs.preflight.outputs) }}
+          echo ${{ fromJSON(needs.preflight.outputs.skip) }}
 
 
   dep1:
@@ -33,13 +33,6 @@ jobs:
   dep2:
     runs-on: ubuntu-latest
     if: github.event.pull_request.draft != false
-    steps:
-      - name: Run SUCCESS script
-        run: echo Ready
-        
-  dep3:
-    runs-on: ubuntu-latest
-    needs: [dep1, dep2]
     steps:
       - name: Run SUCCESS script
         run: echo Ready
@@ -67,7 +60,7 @@ jobs:
   
   draftjob:
     runs-on: ubuntu-latest
-    if: ${{ always() && needs.preflight.outputs.skip == true }}
+    if: ${{ always() && fromJSON(needs.preflight.outputs.skip) == true }}
     needs: [job, preflight]
     steps:
       - name: Hello World        
@@ -78,7 +71,7 @@ jobs:
   
   readyjob:
     runs-on: ubuntu-latest
-    if: ${{ always() && needs.preflight.outputs.skip == false }}
+    if: ${{ always() && fromJSON(needs.preflight.outputs.skip) == false }}
     needs: [job, preflight]
     steps:
       - name: Hello World        
