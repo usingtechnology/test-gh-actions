@@ -56,7 +56,7 @@ jobs:
           echo "$NEEDS"
   lastjob:
     runs-on: ubuntu-latest
-    if: ${{ always() && needs.preflight.outputs.skip!='true' }}
+    if: ${{ always() && needs.preflight.outputs.skip=='true' }}
     needs: [job, preflight]
     steps:
       - name: Hello World        
