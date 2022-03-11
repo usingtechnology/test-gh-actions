@@ -1,0 +1,38 @@
+# This is a basic workflow to help you get started with Actions
+
+name: test-1
+on:  
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+jobs:
+
+  draft_pr:
+    name: draft_pr
+    runs-on: ubuntu-20.04
+    if: github.event.pull_request.draft != false
+    steps:      
+      - uses: actions/checkout@v2        
+
+      - uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: 1
+          body: |
+            This is a multi-line test comment for draft
+            - With GitHub **Markdown** :sparkles:
+            - Created by [create-or-update-comment][1]
+
+            [1]: https://github.com/peter-evans/create-or-update-comment
+          reactions: '+1'
+  
+  ready_pr:    
+    name: ready_pr
+    runs-on: ubuntu-20.04
+    if: github.event.pull_request.draft == false
+    steps:      
+      - uses: actions/checkout@v2        
+      - uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: 1
+          body: |
+            Ready for review
+          reactions: '+1'
