@@ -20,7 +20,11 @@ jobs:
       skip: ${{ steps.skipcheck.outputs.test }}  
     steps:
       - run: |
-          echo ${{needs.preflight.outputs}}
+          echo ${{needs.preflight.outputs.skip}}
+          echo ${{needs.preflight.outputs.skip == true }}
+          echo ${{needs.preflight.outputs.skip == 'true' }}
+          echo ${{needs.preflight.outputs.skip == false }}
+          echo ${{needs.preflight.outputs.skip == 'false' }}
 
   dep1:
     runs-on: ubuntu-latest
