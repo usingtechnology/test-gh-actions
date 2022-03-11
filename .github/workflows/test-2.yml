@@ -11,7 +11,7 @@ jobs:
       skip: ${{ steps.skipcheck.outputs.test }}  
     steps:
       - id: skipcheck
-        run: echo "::set-output skip::${{ github.event.pull_request.draft && github.repository_owner == 'usingtechnology' }}"
+        run: echo "::set-output name=skip::${{ github.event.pull_request.draft && github.repository_owner == 'usingtechnology' }}"
    
   preflightecho:
     runs-on: ubuntu-latest
