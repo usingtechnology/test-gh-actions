@@ -13,7 +13,7 @@ jobs:
         
   dep2:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.draft == false
+    if: github.event.pull_request.draft != false
     steps:
       - name: Run SUCCESS script
         run: echo Ready
