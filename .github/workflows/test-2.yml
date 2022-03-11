@@ -13,7 +13,7 @@ jobs:
       - id: skipcheck
         run: echo "::set-output skip="${{ github.event.pull_request.draft && github.repository_owner == 'usingtechnology' }}
    
-   preflightecho:
+  preflightecho:
     runs-on: ubuntu-latest
     needs: [preflight]
     outputs:
