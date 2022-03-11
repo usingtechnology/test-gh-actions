@@ -11,7 +11,7 @@ jobs:
       skip: ${{ steps.skipcheck.outputs.test }}  
     steps:
       - id: skipcheck
-        run: echo "::set-output skip="${{ github.event.pull_request.draft != false && github.repository_owner == 'usingtechnology' }}
+        run: echo "::set-output skip="${{ github.event.pull_request.draft && github.repository_owner == 'usingtechnology' }}
  
   dep1:
     runs-on: ubuntu-latest
@@ -54,9 +54,21 @@ jobs:
           NEEDS: ${{ toJSON(needs) }}     
         run: |
           echo "$NEEDS"
-  lastjob:
+  
+  draftjob:
     runs-on: ubuntu-latest
-    if: ${{ always() && needs.preflight.outputs.skip=='true' }}
+    if: ${{ always() && needs.preflight.outputs.skip == true }}
+    needs: [job, preflight]
+    steps:
+      - name: Hello World        
+        env:
+          NEEDS: ${{ toJSON(needs) }}     
+        run: |
+          echo "$NEEDS"
+  
+  readyjob:
+    runs-on: ubuntu-latest
+    if: ${{ always() && needs.preflight.outputs.skip == false }}
     needs: [job, preflight]
     steps:
       - name: Hello World        
