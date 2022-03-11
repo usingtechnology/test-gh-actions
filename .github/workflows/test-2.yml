@@ -21,11 +21,7 @@ jobs:
     steps:
       - run: |
           echo ${{ fromJSON(needs.preflight.outputs) }}
-          echo ${{ fromJSON(needs.preflight.outputs.skip) }}
-          echo ${{ fromJSON(needs.preflight.outputs.skip) == true }}
-          echo ${{ fromJSON(needs.preflight.outputs.skip) == 'true' }}
-          echo ${{ fromJSON(needs.preflight.outputs.skip) == false }}
-          echo ${{ fromJSON(needs.preflight.outputs.skip) == 'false' }}
+
 
   dep1:
     runs-on: ubuntu-latest
