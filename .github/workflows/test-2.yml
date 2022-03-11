@@ -12,7 +12,16 @@ jobs:
     steps:
       - id: skipcheck
         run: echo "::set-output skip="${{ github.event.pull_request.draft && github.repository_owner == 'usingtechnology' }}
- 
+   
+   preflightecho:
+    runs-on: ubuntu-latest
+    needs: [preflight]
+    outputs:
+      skip: ${{ steps.skipcheck.outputs.test }}  
+    steps:
+      - run: |
+          echo ${{needs.preflight.outputs}}
+
   dep1:
     runs-on: ubuntu-latest
     if: github.event.pull_request.draft == false
@@ -37,7 +46,7 @@ jobs:
   job:
     runs-on: ubuntu-latest
     if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
-    needs: [dep1, dep2]
+    needs: [dep1, dep2, preflight]
     steps:
       - name: Hello World        
         env:
